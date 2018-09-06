@@ -31,9 +31,7 @@
     "build": "rollup -c",
     "pretest": "npm run build"
   },
-  "dependencies": {
-    "query-string": "^6.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "5.5.0",
     "jest": "^23.5.0",

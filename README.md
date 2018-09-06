@@ -1,6 +1,6 @@
-<div style="text-align:center">
-  ![Jerome](./jerome.png)
-</div>
+<p align="center">
+  <img alt="Jerome" src="//raw.githubusercontent.com/corenzan/jerome/master/jerome.png" width="423" height="126">
+</p>
 
 # Jerome
 

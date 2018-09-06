@@ -11,8 +11,8 @@
 At a glance:
 
 ```javascript
-const API = new Jerome('https://example.org');
-const Stuff = API.model('/stuff');
+const api = new Jerome('https://example.org');
+const Stuff = api.model('/stuff');
 
 Stuff.list();   //-> GET    https://example.org/stuff
 Stuff.get(1);   //-> GET    https://example.org/stuff/1

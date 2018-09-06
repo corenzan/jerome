@@ -1,6 +1,6 @@
 {
   "name": "jerome",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A tiny JavaScript/REST kind of ORM.",
   "main": "dist/jerome.node.js",
   "module": "dist/jerome.module.js",

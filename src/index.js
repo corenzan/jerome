@@ -7,8 +7,8 @@ class Model {
     return this.api.fetch(`${this.path}${path}`, Object.assign({}, this.options, options));
   }
 
-  static list(query = '') {
-    return this.fetch(`/?${query}`)
+  static list(path = '') {
+    return this.fetch(`/${path}`)
       .then(response => response.json())
       .then(json => {
         return this.api.constructor.getList(json).map(data => new this(data));

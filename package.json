@@ -1,0 +1,48 @@
+{
+  "name": "jerome",
+  "version": "0.0.1",
+  "description": "A tiny JavaScript/REST kind of ORM.",
+  "main": "dist/jerome.cjs.js",
+  "module": "dist/jerome.esm.js",
+  "browser": "dist/jerome.umd.js",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "REST",
+    "ORM",
+    "lightweight"
+  ],
+  "scripts": {
+    "start": "jest --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.js",
+    "build": "rollup -c",
+    "pretest": "npm run build"
+  },
+  "dependencies": {
+    "query-string": "^6.1.0"
+  },
+  "devDependencies": {
+    "eslint": "5.5.0",
+    "jest": "^23.5.0",
+    "jest-fetch-mock": "^1.6.5",
+    "rollup": "^0.65.2",
+    "rollup-plugin-commonjs": "^9.1.6",
+    "rollup-plugin-node-resolve": "^3.4.0"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "env": {
+      "browser": true,
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "rules": {}
+  }
+}

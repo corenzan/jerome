@@ -35,23 +35,27 @@ describe('Jerome', () => {
 
   test('API.getList()', () => {
     const response = [];
-    expect(Jerome.getList(response)).toBe(response);
+    const api = new Jerome();
+    expect(api.getList(response)).toBe(response);
   });
 
   test('API.getData()', () => {
     const response = {};
-    expect(Jerome.getData(response)).toBe(response);
+    const api = new Jerome();
+    expect(api.getData(response)).toBe(response);
   });
 
   test('API.prepareData()', () => {
     const response = {};
     const model = { toJSON: () => response };
-    expect(Jerome.prepareData(model)).toBe(response);
+    const api = new Jerome();
+    expect(api.prepareData(model)).toBe(response);
   });
 
   test('API.getID()', () => {
     const id = 1;
-    expect(Jerome.getID({ id })).toBe(id);
+    const api = new Jerome();
+    expect(api.getID({ id })).toBe(id);
   });
 
   test('API.model()', () => {
@@ -90,7 +94,7 @@ describe('Jerome', () => {
     return Stuff.list().then(list => {
       expect(list).toHaveLength(1);
       expect(list[0]).toHaveProperty('name', 'a thing');
-      expect(fetch.mock.calls[0][0]).toEqual('https://example.org/stuff/?');
+      expect(fetch.mock.calls[0][0]).toEqual('https://example.org/stuff/');
     });
   });
 

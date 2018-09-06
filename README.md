@@ -1,3 +1,7 @@
+<div style="text-align:center">
+  ![Jerome](./jerome.png)
+</div>
+
 # Jerome
 
 > A tiny JavaScript/REST kind of ORM.

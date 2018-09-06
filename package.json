@@ -11,6 +11,10 @@
     "url": "https://github.com/corenzan/jerome/issues",
     "email": "arthur@corenzan.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corenzan/jerome.git"
+  },
   "files": [
     "dist"
   ],

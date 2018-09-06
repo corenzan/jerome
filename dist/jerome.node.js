@@ -4,63 +4,59 @@
 // The MIT License © 2018 Corenzan
 // More on https://github.com/corenzan/jerome
 
-// Extract model list from the GET response.
-const getList = response => {
-  return response;
-};
-
-// Extract model data from the GET response.
-const getData = response => {
-  return response;
-};
-
-// Prepare model data to be sent in the POST/PUT request.
-const prepareData = model => {
-  return model.toJSON();
-};
-
-// Extract model ID from a POST/PUT response.
-const getID = response => {
-  return response.id;
-};
-
 class Model {
-  static fetch(path, query, options) {
-    options = Object.assign({}, this.options, options);
-    return this.api.fetch([this.path, path], query, options);
+  static fetch(path, options = {}) {
+    return this.api.fetch(`${this.path}${path}`, Object.assign({}, this.options, options));
   }
 
-  static list(query) {
-    return this.fetch('/', query).then(response => {
-      const list = this.api._getList(response.json());
-      return list.map(data => new this(data));
-    });
+  static list(query = '') {
+    return this.fetch(`/?${query}`)
+      .then(response => response.json())
+      .then(json => {
+        return this.api.constructor.getList(json).map(data => new this(data));
+      });
   }
 
   static get(id) {
-    return this.fetch(`/${id}`).then(response => {
-      const data = this.api._getData(response.json());
-      return new this(data);
-    });
+    return this.fetch(`/${id}`)
+      .then(response => response.json())
+      .then(json => {
+        return new this(this.api.constructor.getData(json));
+      });
   }
 
   constructor(data) {
     Object.assign(this, data);
-    this.data = data;
+  }
+
+  toJSON() {
+    const data = {};
+    Object.getOwnPropertyNames(this).forEach(key => {
+      data[key] = this[key];
+    });
+    return data;
+  }
+
+  get path() {
+    return this.persisted ? `/${this.id}` : '/';
+  }
+
+  get persisted() {
+    return this.id !== undefined;
   }
 
   save() {
-    const path = this.id ? `/${this.id}` : '/';
     const options = {
-      method: this.id ? 'PUT' : 'POST',
-      body: this.constructor.api._prepareData(this)
+      method: this.persisted ? 'PUT' : 'POST',
+      body: JSON.stringify(this.constructor.api.constructor.prepareData(this))
     };
-    return this.constructor.fetch(path, options).then(response => {
-      if (this.id === undefined) {
-        this.id = this.constructor.api._getID(response.json());
-      }
-      return response;
-    });
+    return this.constructor.fetch(this.path, options)
+      .then(response => response.json())
+      .then(json => {
+        if (!this.persisted) {
+          this.id = this.constructor.api.constructor.getID(json);
+        }
+      });
   }
 
   delete() {
@@ -71,44 +67,33 @@ class Model {
 }
 
 class API {
-  static getList(response) {
-    return getList(response);
+  static getList(json) {
+    return json;
   }
 
-  static getData(response) {
-    return getData(response);
+  static getData(json) {
+    return json;
+  }
+
+  static getID(json) {
+    return json.id;
   }
 
   static prepareData(model) {
-    return prepareData(model);
+    return model.toJSON();
   }
 
-  static getID(response) {
-    return getID(response);
+  constructor(url, options = {}) {
+    this.url = url;
+    this.options = options;
   }
 
-  constructor(url, options) {
-    this.url = new URL(url).toString();
-    this.options = options || {};
+  fetch(path, options = {}) {
+    const url = new URL(path.replace(new RegExp('/{2,}'), '/'), this.url);
+    return fetch(url.toString(), Object.assign({}, this.options, options));
   }
 
-  fetch(path, query, options) {
-    if (typeof path === 'object') {
-      path = path.join('/');
-    }
-    const url = new URL(path, this.url);
-    if (typeof query === 'string') {
-      url.search = query;
-    } else if (typeof query === 'object') {
-      for (const key of Object.keys(query)) {
-        url.searchParams.set(key, query[key]);
-      }
-    }
-    options = Object.assign({}, this.options, options);
-    return fetch(url.toString(), options);
-  }
-
-  model(path, options) {
+  model(path, options = {}) {
     const api = this;
 
     return class extends Model {

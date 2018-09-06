@@ -13,11 +13,11 @@
       return this.api.fetch(`${this.path}${path}`, Object.assign({}, this.options, options));
     }
 
-    static list(query = '') {
-      return this.fetch(`/?${query}`)
+    static list(path = '') {
+      return this.fetch(`/${path}`)
         .then(response => response.json())
         .then(json => {
-          return this.api.constructor.getList(json).map(data => new this(data));
+          return this.api.getList(json).map(data => new this(data));
         });
     }
 
@@ -25,7 +25,7 @@
       return this.fetch(`/${id}`)
         .then(response => response.json())
         .then(json => {
-          return new this(this.api.constructor.getData(json));
+          return new this(this.api.getData(json));
         });
     }
 
@@ -52,13 +52,13 @@
     save() {
       const options = {
         method: this.persisted ? 'PUT' : 'POST',
-        body: JSON.stringify(this.constructor.api.constructor.prepareData(this))
+        body: JSON.stringify(this.constructor.api.prepareData(this))
       };
       return this.constructor.fetch(this.path, options)
         .then(response => response.json())
         .then(json => {
           if (!this.persisted) {
-            this.id = this.constructor.api.constructor.getID(json);
+            this.id = this.constructor.api.getID(json);
           }
         });
     }
@@ -71,22 +71,6 @@
   }
 
   class API {
-    static getList(json) {
-      return json;
-    }
-
-    static getData(json) {
-      return json;
-    }
-
-    static getID(json) {
-      return json.id;
-    }
-
-    static prepareData(model) {
-      return model.toJSON();
-    }
-
     constructor(url, options = {}) {
       this.url = url;
       this.options = options;
@@ -113,6 +97,22 @@
           return options;
         }
       };
+    }
+
+    getList(json) {
+      return json;
+    }
+
+    getData(json) {
+      return json;
+    }
+
+    getID(json) {
+      return json.id;
+    }
+
+    prepareData(model) {
+      return model.toJSON();
     }
   }
 

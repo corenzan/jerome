@@ -30,14 +30,14 @@ class Model {
 
   static list(query) {
     return this.fetch('/', query).then(response => {
-      const list = this.api._getList(response.json());
+      const list = this.api.getList(response.json());
       return list.map(data => new this(data));
     });
   }
 
   static get(id) {
     return this.fetch(`/${id}`).then(response => {
-      const data = this.api._getData(response.json());
+      const data = this.api.getData(response.json());
       return new this(data);
     });
   }
@@ -51,11 +51,11 @@ class Model {
     const path = this.id ? `/${this.id}` : '/';
     const options = {
       method: this.id ? 'PUT' : 'POST',
-      body: this.constructor.api._prepareData(this)
+      body: this.constructor.api.prepareData(this)
     };
     return this.constructor.fetch(path, options).then(response => {
       if (this.id === undefined) {
-        this.id = this.constructor.api._getID(response.json());
+        this.id = this.constructor.api.getID(response.json());
       }
       return response;
     });

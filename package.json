@@ -5,9 +5,16 @@
   "main": "dist/jerome.cjs.js",
   "module": "dist/jerome.esm.js",
   "browser": "dist/jerome.umd.js",
+  "homepage": "https://github.com/corenzan/jerome#readme",
+  "author": "Arthur Corenzan <arthur@corenzan.com>",
+  "bugs": {
+    "url": "https://github.com/corenzan/jerome/issues",
+    "email": "arthur@corenzan.com"
+  },
   "files": [
     "dist"
   ],
+  "license": "MIT",
   "keywords": [
     "REST",
     "ORM",

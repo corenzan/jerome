@@ -24,11 +24,13 @@ thing.save();   //-> PUT    https://example.org/stuff/1 { ... }
 thing.delete(); //-> DELETE https://example.org/stuff/1
 ```
 
-All the methods return promises.
+All these methods return promises.
+
+Jerome works in the **browser** as well as in **node**, but depends on [fetch](https://caniuse.com/#feat=fetch) and [URL](https://caniuse.com/#feat=url).
 
 ### API
 
-_Work in progress..._
+_Work in progress..._ 🚧
 
 ## Legal
 

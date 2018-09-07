@@ -25,11 +25,11 @@
     "lightweight"
   ],
   "scripts": {
-    "start": "jest --watch",
-    "test": "jest",
-    "lint": "eslint src/**/*.js",
     "build": "rollup -c",
-    "pretest": "npm run build"
+    "lint": "eslint src/**/*.js",
+    "preversion": "npm run build",
+    "start": "jest --watch",
+    "test": "jest"
   },
   "dependencies": {},
   "devDependencies": {

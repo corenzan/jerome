@@ -33,6 +33,18 @@ describe('Jerome', () => {
     });
   });
 
+  test('API.fetch() non-successful', () => {
+    fetch.mockResponse('', {
+      status: 404
+    });
+
+    const api = new Jerome('https://example.org/');
+
+    return api.fetch('/').catch(response => {
+      expect(response.ok).toBeFalsy();
+    });
+  });
+
   test('API.getList()', () => {
     const response = [];
     const api = new Jerome();

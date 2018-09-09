@@ -72,7 +72,12 @@ class API {
 
   fetch(path, options = {}) {
     const url = new URL(path.replace(new RegExp('/{2,}'), '/'), this.url);
-    return fetch(url.toString(), Object.assign({}, this.options, options));
+    return fetch(url.toString(), Object.assign({}, this.options, options)).then(response => {
+      if (response.ok) {
+        return response;
+      }
+      throw response;
+    });
   }
 
   model(path, options = {}) {
